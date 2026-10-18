@@ -1,7 +1,13 @@
-from fastapi import FastAPI
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from requests.exceptions import RequestException
+
 from get_weather import get_weather
 from get_coordinates import get_coordinates
+
 app = FastAPI()
+
 weather_codes = {
     0: "Clear sky",
     1: "Mainly clear",
@@ -23,21 +29,46 @@ weather_codes = {
     82: "Heavy rain showers",
     95: "Thunderstorm"
 }
-from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:63342"],
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_origins=[
+        "http://localhost:63342",
+        "https://fluffyhep.github.io"
+    ],
+    allow_credentials=False,
+    allow_methods=["GET"],
     allow_headers=["*"],
 )
 
 
 @app.get("/weather")
 def weather(city: str):
-    latitude, longitude = get_coordinates(city)
-    data = get_weather(latitude, longitude)
-    code = data["current"]["weather_code"]
-    data["weather_description"] = weather_codes.get(code, "Unknown")
-    return data
+    try:
+        latitude, longitude = get_coordinates(city)
+        data = get_weather(latitude, longitude)
+
+        code = data["current"]["weather_code"]
+        data["weather_description"] = weather_codes.get(
+            code, "Unknown"
+        )
+
+        return data
+
+    except ValueError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+
+    except RuntimeError as error:
+        raise HTTPException(status_code=503, detail=str(error))
+
+    except RequestException:
+        raise HTTPException(
+            status_code=502,
+            detail="Weather service is temporarily unavailable."
+        )
+
+    except (KeyError, TypeError):
+        raise HTTPException(
+            status_code=502,
+            detail="Invalid response from weather service."
+        )

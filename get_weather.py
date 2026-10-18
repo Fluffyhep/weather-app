@@ -19,11 +19,16 @@ def get_weather(latitude, longitude):
     }
 
     response = requests.get(url, params=params, timeout=15)
-    response.raise_for_status()
 
+    if response.status_code == 429:
+        raise RuntimeError(
+            "Weather API rate limit exceeded. Please try again later."
+        )
+
+    response.raise_for_status()
     data = response.json()
 
     if "current" not in data:
-        raise ValueError(f"Weather data missing: {data}")
+        raise ValueError(f"Invalid weather response: {data}")
 
     return data

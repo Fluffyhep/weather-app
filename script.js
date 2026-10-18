@@ -24,7 +24,7 @@ function getWeather() {
     btn.textContent = "Loading..."
     btn.disabled = true
 
-    fetch(`http://127.0.0.1:8000/weather?city=${encodeURIComponent(cityName)}`)
+    fetch(`https://weather-app-api-q72v.onrender.com/weather?city=${encodeURIComponent(cityName)}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error("City not found or server error")
@@ -123,7 +123,7 @@ function getWeather() {
             error.textContent = err.message
         })
         .finally(() => {
-            btn.textContent = "Click"
+            btn.textContent = "Search"
             btn.disabled = false
         })
 }

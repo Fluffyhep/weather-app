@@ -1,32 +1,70 @@
 # Weather App
 
-A simple Python application that shows the current weather for any city using the Open-Meteo API.
+A weather web application built with Python and JavaScript. Search for a city to view current weather conditions and a 7-day forecast.
 
 ## Features
 
-- Search weather by city
-- Current temperature
-- Feels-like temperature
+- Search for weather by city name
+- Current temperature and feels-like temperature
 - Weather conditions
-- Humidity
-- Wind speed
-- Invalid city handling
+- Humidity and wind speed
+- 7-day weather forecast
+- Daily minimum and maximum temperatures
+- Precipitation probability
+- Error handling for invalid cities
+- Responsive design for mobile devices
 
 ## Technologies
 
+**Frontend**
+- HTML5
+- CSS3
+- JavaScript
+
+**Backend**
 - Python
+- FastAPI
 - Requests
-- Open-Meteo API
+
+**API**
+- [Open-Meteo](https://open-meteo.com/) — weather and geocoding data
+
+## Project Structure
+
+```text
+weather-app/
+├── main.py
+├── get_weather.py
+├── get_coordinates.py
+├── index.html
+├── style.css
+├── script.js
+├── requirements.txt
+└── README.md
+```
 
 ## Installation
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Fluffyhep/weather-app
+git clone https://github.com/Fluffyhep/weather-app.git
+cd weather-app
 ```
 
-2. Install the required package:
+2. Create a virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+3. Activate it on Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+4. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -34,40 +72,32 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run the application:
+1. Start the FastAPI server:
 
 ```bash
-python main.py
+uvicorn main:app --reload
 ```
 
-Then enter the name of a city:
+2. Open the frontend in your browser using a local development server.
+
+3. Enter a city name to view its current weather and 7-day forecast.
+
+The backend provides weather data through the `/weather` endpoint:
 
 ```text
-Enter city: Chernivtsi
-```
-
-Example output:
-
-```text
-Weather: Partly cloudy
-Temperature: 18.5°C
-Feels like: 17.8°C
-Wind speed: 7.2 km/h
-Humidity: 65%
-```
-
-## Project Structure
-
-```text
-weather-app/
-├── main.py
-├── get_coordinates.py
-├── get_weather.py
-├── display_weather.py
-├── requirements.txt
-└── README.md
+/weather?city=Chernivtsi
 ```
 
 ## API
 
-Weather and geocoding data are provided by the Open-Meteo API.
+Weather forecasts and geocoding data are provided by the [Open-Meteo API](https://open-meteo.com/).
+
+## What I Learned
+
+- Working with external APIs
+- Building a frontend with HTML, CSS, and JavaScript
+- Creating API endpoints with FastAPI
+- Connecting frontend and backend
+- Processing JSON responses
+- Working with current weather data and forecasts
+- Creating a responsive user interface

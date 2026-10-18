@@ -1,10 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Weather Api</title>
 </head>
 <body>
-$END$
+<nav class="top-nav">
+    <div class="nav-container">
+        <a href="https://github.com/Fluffyhep" class="brand" target="_blank" rel="noopener noreferrer">
+            Mark <span>/ Fluffy.</span>
+        </a>
+    </div>
+</nav>
+<header>
+    <h1>Weather App</h1>
+    <p>Check the weather anywhere in the world</p>
+</header>
+<div class="search-box">
+<input id="city" type="text" placeholder="Enter a city..." autocomplete="off"><button id="getWeather">Search</button>
+</div>
+<div id="result">
+    <p id="error"></p>
+    <h2 id="cityName"></h2>
+    <p id="weatherDescription"></p>
+    <p id="weatherIcon"></p>
+    <p id="temperature"></p>
+    <p id="feelsLike"></p>
+    <p id="humidity"></p>
+    <p id="wind"></p>
+</div>
+<section id="forecast">
+    <h2>7-Day Forecast</h2>
+    <div id="forecastDays"></div>
+</section>
+<script src="script.js"></script>
+<footer>
+    <p>© 2026 Mark / Fluffy</p>
+    <p>Built while learning.</p>
+</footer>
 </body>
 </html>

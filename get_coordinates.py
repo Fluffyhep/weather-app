@@ -1,14 +1,24 @@
 import requests
 
-def get_coordinates(city):
-    geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}&count=1"
 
-    geo_response = requests.get(geo_url)
-    geo_data = geo_response.json()
-    try:
-        latitude = geo_data["results"][0]["latitude"]
-        longitude = geo_data["results"][0]["longitude"]
-    except (KeyError, IndexError):
-        print("city was not found")
-        exit()
+def get_coordinates(city):
+    geo_url = "https://geocoding-api.open-meteo.com/v1/search"
+
+    params = {
+        "name": city,
+        "count": 1
+    }
+
+    response = requests.get(geo_url, params=params, timeout=15)
+    response.raise_for_status()
+
+    geo_data = response.json()
+    results = geo_data.get("results")
+
+    if not results:
+        raise ValueError(f"City not found: {city}")
+
+    latitude = results[0]["latitude"]
+    longitude = results[0]["longitude"]
+
     return latitude, longitude

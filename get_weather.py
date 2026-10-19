@@ -21,6 +21,7 @@ def get_weather(latitude, longitude):
     response = requests.get(url, params=params, timeout=15)
 
     if response.status_code == 429:
+        print("Open-Meteo 429 response:", response.text)
         raise RuntimeError(
             "Weather API rate limit exceeded. Please try again later."
         )
